@@ -1,6 +1,6 @@
 {
   "name": "mariadb-csv-to-db",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "description": "Bulk insert csv file to table, focused on convenience rather than performance.",
   "main": "index.js",
   "scripts": {
