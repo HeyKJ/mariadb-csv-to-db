@@ -63,7 +63,7 @@ process.nextTick(async () => {
 11. Return total file line count and total affected row count (match always true because [8])
 
 ### batch(conn, props)  
-`conn` object, mariadb connection  
+`conn` object(required), mariadb connection  
 `props` object  
 &nbsp;&nbsp;&nbsp;&nbsp;`file` object  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`path` string(required), csv file path  
