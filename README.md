@@ -60,7 +60,7 @@ process.nextTick(async () => {
 *if values.length !== affetcedRows(batch insert result) ? then throw Error
 9. [7]~[8] loop
 10. Batch rest values
-11. Return total file line count and total affected row count (match always true because [8])
+11. Return total file line count and total affected row count (match always true because [9])
 
 ### batch(conn, props)  
 `conn` object(required), mariadb connection  
