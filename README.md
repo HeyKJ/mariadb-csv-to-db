@@ -52,8 +52,8 @@ process.nextTick(async () => {
 2. Decoding your csv file
 3. Parsing your csv record → fields(array) using props(quote, delimiter, escape)
 4. Modifying your fields
-5-a. Set parameter if props.database.columns is array
-5-b. Set parameter using header (modified fields) if props.database.columns is null
+5-a. Set parameter if props.database.columns is array  
+5-b. Set parameter using header (modified fields) if props.database.columns is null  
 6. Skip header ? then not pushing header into values(array)
 7. Pushing your fields to values until values.length < sizePerTime
 8. Batch values  
