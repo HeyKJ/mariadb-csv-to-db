@@ -1,16 +1,28 @@
 {
   "name": "mariadb-csv-to-db",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "Bulk insert csv file to table, focused on convenience rather than performance.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "homepage": "https://github.com/HeyKJ/mariadb-csv-to-db",
+  "keywords": [
+    "mariadb",
+    "csv",
+    "database",
+    "db",
+    "import",
+    "insert",
+    "bulk",
+    "batch"
+  ],
+  "author": "godkimchi",
   "license": "ISC",
   "dependencies": {
-    "godkimchi-read-line": "^1.0.3",
-    "mariadb": "^2.5.1"
+    "csv-parse": "^4.14.0",
+    "iconv-lite": "^0.6.2",
+    "mariadb": "^2.5.1",
+    "n-readlines": "^1.0.0"
   }
 }
