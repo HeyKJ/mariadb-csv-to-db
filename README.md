@@ -2,7 +2,7 @@
 
 Bulk insert csv file to table, focused on convenience rather than performance.
 
-### Example
+### Quick Example
 ```javascript
 const mariadb = require('mariadb')
 const batch = require('mariadb-csv-to-db')
@@ -75,5 +75,53 @@ process.nextTick(async () => {
 &nbsp;&nbsp;&nbsp;&nbsp;`import` object  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`skipHeader` boolean, first line of the file is excluded from the batch, default `true`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sizePerTime` number, number of rows inserted per time, default `1000`  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`modifyFields` function, fields => return fields, modifying fields, must return fields, default `null`
-      
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`modifyFields` function, fields => return fields, modifying fields, must return fields, default `null`  
+
+### Another Example
+```javascript
+const mariadb = require('mariadb')
+const batch = require('mariadb-csv-to-db')
+
+process.nextTick(async () => {
+  let conn
+
+  try {
+    // Property for CSV to Database
+    const props = {
+      file: {
+        path: 'Your csv file path',
+        encoding: 'utf-8',
+        quote: '',
+        delimiter: ','
+      },
+      database: {
+        table: 'test.WOW',
+        // if columns: null ? insert into table values (?, ?)
+        // if columns array ? insert into table (columns.join(',')) values (?, ?)
+        columns: ['`a`', '`b`']
+      },
+      import: {
+        skipHeader: true,
+        sizePerTime: 1000,
+        modifyFields: fields => [fields[0], fields[1]] // returned fields length must be equal to the props.database.columns length
+      }
+    }
+    // Databse connection
+    conn = await mariadb.createConnection({ host: 'HolyHost', user: 'Kimchi', password: '????' })
+
+    await conn.beginTransaction()
+    console.log(await batch(conn, props)) // { totalCount: 1000, totalAffectedRows: 1000, match: true }
+    await conn.commit()
+  } catch (e) {
+    await conn.rollback()
+    console.error(e)
+  } finally {
+    if (conn) {
+      await conn.end()
+    }
+
+    process.exit()
+  }
+})
+```
+
