@@ -10,12 +10,12 @@ const DEFAULT_PROPS = {
     escape: false
   },
   database: {
-    columns: undefined
+    columns: null
   },
   import: {
     skipHeader: true,
     sizePerTime: 1000,
-    modifyFields: fields => fields,
+    modifyFields: null
   }
 }
 
@@ -72,9 +72,20 @@ module.exports = async (conn, props) => {
       }
       // Header
       if (++count == 1) {
+        let parameterSet
+        let columns
         // Set insert statement
-        const parameterSet = new Array(fields.length).fill('?')
-        insertStatement = `insert into ${props.database.table} values(${parameterSet.join(', ')})`
+        if (Array.isArray(props.database.columns)) {
+          parameterSet = new Array(props.database.columns.length).fill('?')
+          columns = '(' + props.database.columns.join(', ') + ')'
+        } else {
+          parameterSet = new Array(fields.length).fill('?')
+          columns = ''
+        }
+
+        insertStatement = `insert into ${props.database.table} ${columns} values(${parameterSet.join(', ')})`
+
+        console.log(insertStatement)
 
         if (props.import.skipHeader === true) {
           continue
