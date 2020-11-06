@@ -52,7 +52,8 @@ process.nextTick(async () => {
 2. Decoding your csv file
 3. Parsing your csv record → fields(array) using props(quote, delimiter, escape)
 4. Modifying your fields
-5. Set parameter length using header(modified fields)
+5-a. Set parameter if props.database.columns is array
+5-b. Set parameter using header (modified fields) if props.database.columns is null
 6. Skip header ? then not pushing header into values(array)
 7. Pushing your fields to values until values.length < sizePerTime
 8. Batch values  
@@ -71,6 +72,7 @@ process.nextTick(async () => {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`delimiter` string, csv delimiter, default `,`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`escape` string, csv escape, default `false`  
 &nbsp;&nbsp;&nbsp;&nbsp;`database` object  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`table` string(required), target table name  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`columns` array, column names, default `null`  
 &nbsp;&nbsp;&nbsp;&nbsp;`import` object  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`skipHeader` boolean, first line of the file is excluded from the batch, default `true`  
