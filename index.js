@@ -35,11 +35,10 @@ const batch = async (conn, insertStatement, values) => {
   try {
     const { affectedRows } = await conn.batch(insertStatement, values)
 
-    if (values.length === affectedRows) {
+    if (values.length === affectedRows)
       return affectedRows
-    } else {
-      throw Error(`Data lost while adding data to the table -- Data length to be inserted[${values.length}] -affectedRows[${affectedRows}]`)
-    }
+    else
+      throw Error(`Data lost while adding data to the table -- Data length to be inserted[${values.length}] but affectedRows[${affectedRows}]`)
   } catch (e) {
     return Promise.reject(e)
   }
@@ -67,9 +66,8 @@ module.exports = async (conn, props) => {
     // Parsing CSV to Array
     for await (let fields of source.pipe(decode).pipe(parser)) {
       // Modify field
-      if (typeof props.import.modifyFields === 'function') {
+      if (typeof props.import.modifyFields === 'function')
         fields = props.import.modifyFields(fields)
-      }
       // Header
       if (++count == 1) {
         let parameterSet
@@ -85,11 +83,8 @@ module.exports = async (conn, props) => {
 
         insertStatement = `insert into ${props.database.table} ${columns} values(${parameterSet.join(', ')})`
 
-        console.log(insertStatement)
-
-        if (props.import.skipHeader === true) {
+        if (props.import.skipHeader === true)
           continue
-        }
       }
       // Batch
       if (values.length === props.import.sizePerTime) {
@@ -100,9 +95,8 @@ module.exports = async (conn, props) => {
       values.push(fields)
     }
     // Batch rest values
-    if (values.length > 0) {
+    if (values.length > 0)
       totalAffectedRows += await batch(conn, insertStatement, values)
-    }
 
     return {
       totalCount: props.import.skipHeader ? count - 1 : count,
